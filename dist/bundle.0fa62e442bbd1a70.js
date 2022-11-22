@@ -1,0 +1,2 @@
+(()=>{"use strict";var e={616:(e,r)=>{Object.defineProperty(r,"__esModule",{value:!0}),r.greeting=void 0,r.greeting="Welcome to my boilerplater"}},r={};function t(o){var i=r[o];if(void 0!==i)return i.exports;var n=r[o]={exports:{}};return e[o](n,n.exports,t),n.exports}(()=>{const e=t(616);console.log(e.greeting)})()})();
+//# sourceMappingURL=bundle.0fa62e442bbd1a70.js.map
