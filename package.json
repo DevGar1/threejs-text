@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "webpack --config ./webpack.config.prod.js",
-    "dev": "webpack serve --config ./webpack.config.dev.js"
+    "dev": "webpack serve --config ./webpack.config.dev.js",
+    "deploy": "vercer --prod"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
@@ -24,6 +25,7 @@
   },
   "dependencies": {
     "dat.gui": "^0.7.9",
-    "three": "^0.146.0"
+    "three": "^0.146.0",
+    "vercel": "^28.5.6"
   }
 }

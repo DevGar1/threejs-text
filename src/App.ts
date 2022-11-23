@@ -1,5 +1,5 @@
 import { Group } from "three";
-import { get3dText, getBoxWithMaterial, getMaterial } from "./3D/models";
+import { get3dText, getBoxGeometry, getBoxMesh, getMaterial } from "./3D/models";
 import { System } from "./3D/system";
 import { getRandomArbitrary } from "./utils";
 
@@ -19,8 +19,9 @@ export class App {
 
   async addingBackground() {
     const material = await getMaterial();
+    const boxGeometry = getBoxGeometry(0.25);
     for (let index = 0; index < 2000; index++) {
-      const geometry: any = getBoxWithMaterial(0.3, material);
+      const geometry: any = getBoxMesh(boxGeometry, material);
       geometry.position.x = getRandomArbitrary(-20, 20);
       geometry.position.y = getRandomArbitrary(-7, 7);
       geometry.position.z = getRandomArbitrary(-0.5, -5);

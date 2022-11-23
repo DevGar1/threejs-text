@@ -1,5 +1,5 @@
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
-import { BoxGeometry, Mesh, MeshBasicMaterial, MeshMatcapMaterial, TorusGeometry } from "three";
+import { BoxGeometry, Material, Mesh, MeshBasicMaterial, MeshMatcapMaterial, TorusGeometry } from "three";
 import { textLoader, textureLoader } from "../loaders";
 
 export const getBox = async (size = 2) => {
@@ -10,8 +10,12 @@ export const getBox = async (size = 2) => {
 };
 export const getMaterial = async () => {
   const textures = await getTexture("cubes.jpeg");
-  const material = new MeshMatcapMaterial({ matcap: textures, color: '#ACBCBB' });
+  const material = new MeshMatcapMaterial({ matcap: textures, color: "#ACBCBB" });
   return material;
+};
+
+export const getBoxGeometry = (size: number) => {
+  return new BoxGeometry(size, size, size);
 };
 
 export const getBoxWithMaterial = (size: number, material: MeshMatcapMaterial) => {
@@ -19,8 +23,12 @@ export const getBoxWithMaterial = (size: number, material: MeshMatcapMaterial) =
   return new Mesh(geometry, material);
 };
 
+export const getBoxMesh = (geometry: BoxGeometry, material: Material) => {
+  return new Mesh(geometry, material);
+};
+
 export const getTourusWithMaterial = (material: MeshMatcapMaterial) => {
-  const geomtry = new TorusGeometry(0.2, .09, 20,10);
+  const geomtry = new TorusGeometry(0.2, 0.09, 20, 10);
   return new Mesh(geomtry, material);
 };
 const getTexture = async (path: string) => {
@@ -42,6 +50,6 @@ export const get3dText = async (): Promise<Mesh> => {
   });
   textGeometry.center();
   const texture = await getTexture("text.jpeg");
-  const material = new MeshMatcapMaterial({ matcap: texture, color: '#E9D4CE' });
+  const material = new MeshMatcapMaterial({ matcap: texture, color: "#E9D4CE" });
   return new Mesh(textGeometry, material);
 };
