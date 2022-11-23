@@ -2,7 +2,7 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.prod.js",
     "dev": "webpack serve --config ./webpack.config.dev.js",
-    "deploy": "vercer --prod"
+    "deploy": "vercel --prod"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
