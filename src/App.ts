@@ -1,5 +1,7 @@
-import { getBox } from "./3D/models";
+import { AxesHelper, Group } from "three";
+import { get3dText, getBox, getBoxWithMaterial, getMaterial, getTourusWithMaterial } from "./3D/models";
 import { System } from "./3D/system";
+import { getRandomArbitrary } from "./utils";
 
 export class App {
   private system: System;
@@ -7,12 +9,27 @@ export class App {
     this.system = new System(container);
   }
 
-  init() {
-    const box: any = getBox(1);
-    box.tick = (delta: number) => {
-      box.rotation.y = Math.sin(delta) * 1;
-    };
-    this.system.addElementToScene(box);
-    this.system.animateElement(box);
+  async init() {
+    const text = await get3dText();
+    const group = new Group();
+    group.add(text);
+    this.system.addElementToScene(group);
+    await this.addingBackground();
+  }
+
+  async addingBackground() {
+    const material = await getMaterial();
+    for (let index = 0; index < 2000; index++) {
+      const geometry: any = getBoxWithMaterial(0.3, material);
+
+      geometry.position.x = getRandomArbitrary(-20, 20);
+      geometry.position.y = getRandomArbitrary(-7, 7);
+      geometry.position.z = getRandomArbitrary(-0.5, -5);
+      geometry.tick = (delta: number) => {
+        geometry.rotation.y = delta * (Math.PI / 1);
+      };
+      this.system.animateElement(geometry);
+      this.system.addElementToScene(geometry);
+    }
   }
 }

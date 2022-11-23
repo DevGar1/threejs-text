@@ -1,4 +1,5 @@
-import { Camera, Color, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { Color, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Animation } from "./Animation";
 
 export class System {
@@ -15,15 +16,20 @@ export class System {
     this.renderer = new WebGLRenderer({ canvas: container });
     this.setSize = this.setSize.bind(this);
     this.animation = new Animation(this.renderer, this.scene, this.camera, []);
+    const canvas: any = container;
+    const controls = new OrbitControls(this.camera, canvas);
+    controls.update();
+
     this.init();
   }
 
   init() {
+    this.scene.background = new Color("#ECEAEA");
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.camera.position.z += 5;
     window.addEventListener("resize", this.setSize);
     this.setSize();
-    this.animation.start()
+    this.animation.start();
   }
   animateElement(object3D: Object3D) {
     this.animation.addElement(object3D);
@@ -39,7 +45,6 @@ export class System {
       return;
     }
     this.scene.add(element);
-    console.log(this.scene);
   }
   private setContainerSize() {
     this.size = { width: window.innerWidth, heigth: window.innerHeight };
@@ -51,6 +56,9 @@ export class System {
     this.camera.aspect = width / heigth;
     this.camera.updateProjectionMatrix();
     this.render();
+  }
+  getElementFromScene(name: string) {
+    return this.scene.getObjectByName(name);
   }
   render() {
     const { camera, scene } = this;
