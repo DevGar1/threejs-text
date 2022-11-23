@@ -1,6 +1,7 @@
+import { GUI } from "dat.gui";
 import { Color, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Animation } from "./Animation";
+import { FlyCamera } from "./FlyCamera";
 
 export class System {
   private camera: PerspectiveCamera;
@@ -16,9 +17,7 @@ export class System {
     this.renderer = new WebGLRenderer({ canvas: container });
     this.setSize = this.setSize.bind(this);
     this.animation = new Animation(this.renderer, this.scene, this.camera, []);
-    const canvas: any = container;
-    const controls = new OrbitControls(this.camera, canvas);
-    controls.update();
+    new FlyCamera(this.camera);
 
     this.init();
   }
@@ -26,10 +25,11 @@ export class System {
   init() {
     this.scene.background = new Color("#ECEAEA");
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.camera.position.z += 5;
+    this.camera.position.z += 13.5;
     window.addEventListener("resize", this.setSize);
     this.setSize();
     this.animation.start();
+    // this.initDev();
   }
   animateElement(object3D: Object3D) {
     this.animation.addElement(object3D);
@@ -59,6 +59,15 @@ export class System {
   }
   getElementFromScene(name: string) {
     return this.scene.getObjectByName(name);
+  }
+
+  initDev() {
+    const gui = new GUI({ name: "controls" });
+    const cameraFolder = gui.addFolder("Camera");
+    cameraFolder.add(this.camera.position, "x", -20, 20, 0.5);
+    cameraFolder.add(this.camera.position, "y", -10, 10, 0.5);
+    cameraFolder.add(this.camera.position, "z", -50, 50, 0.5);
+    cameraFolder.open();
   }
   render() {
     const { camera, scene } = this;

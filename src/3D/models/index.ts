@@ -33,12 +33,12 @@ export const get3dText = async (): Promise<Mesh> => {
     font: font,
     size: 5,
     height: 1,
-    curveSegments: 4,
+    curveSegments: 3,
     bevelEnabled: true,
-    bevelThickness: 0.005,
-    bevelSize: 0.06,
+    bevelThickness: 0.001,
+    bevelSize: 0.01,
     bevelOffset: 0,
-    bevelSegments: 2,
+    bevelSegments: 1,
   });
   textGeometry.center();
   const texture = await getTexture("text.jpeg");
